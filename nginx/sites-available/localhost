@@ -1,0 +1,34 @@
+server {
+  listen       80;
+  server_name  localhost;
+
+  # hide web framework res header
+  proxy_hide_header   X-Powered-By;
+
+  #charset koi8-r;
+
+  #access_log  logs/host.access.log  main;
+
+  location ~* /a(pi|uth) {
+    proxy_pass http://localhost:3000;
+  }
+
+  location /assets/ {
+    root	/Users/leozdgao/www;
+    # index  index.html index.htm;
+    include  includes/expires;
+  }
+
+  location / {
+    proxy_pass http://localhost:8080;
+  }
+
+  #error_page  404              /404.html;
+
+  # redirect server error pages to the static page /50x.html
+  #
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+    root   html;
+  }
+}
