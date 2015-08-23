@@ -1,11 +1,12 @@
 import path from 'path'
 import webpack from 'webpack'
-import { entryPoint, externals, jsLoader, autoprefixerLoader } from './baseConfig'
+import { entryPoint, jsLoader, autoprefixerLoader } from './baseConfig'
 import config from '../config'
 
 const webpackDevServerAddress = `http://localhost:${config.webpackDevPort}`
 const cssLoaderForDev = `style-loader!css-loader!${autoprefixerLoader}`
 
+// Development version doesn't need external react and ExtractTextPlugin
 export default {
   devtool: 'eval',
   entry: [
@@ -13,7 +14,6 @@ export default {
     'webpack/hot/only-dev-server',
     entryPoint
   ],
-  externals,
   output: {
     path: process.env['PUBLISHPATH'] || './assets',
     filename: 'bundle.js',
